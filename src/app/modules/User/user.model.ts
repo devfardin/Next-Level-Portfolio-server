@@ -19,6 +19,10 @@ const UserSchema = new Schema<TUser, IUserModel>({
     required: [true, 'Password Is Requires'],
     trim: true,
   },
+  profile: {
+    type: String,
+    trim: true,
+  },
 });
 
 UserSchema.pre('save', async function (next) {
