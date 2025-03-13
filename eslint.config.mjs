@@ -3,7 +3,6 @@ import eslintPluginPrettier from "eslint-plugin-prettier";
 import eslintPluginJs from "@eslint/js";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
-
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
   {
@@ -28,7 +27,6 @@ export default [
       ...eslintPluginPrettier.configs.recommended.rules,
       ...eslintPluginJs.configs.recommended.rules,
       ...tseslint.configs.recommended.rules,
-      "no-unused-vars": "error",
       "no-unused-expressions": "error",
       "prefer-const": "error",
       "no-console": "warn",
