@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import status from 'http-status';
 import AppError from '../../errors/AppError';
 import { TService } from './service.interface';
 import { ServiceModel } from './service.model';
 
-const createServiceIntoDB = async (payload: TService) => {
+const createServiceIntoDB = async (payload: Partial<TService>, file: any) => {
+  if (!file) {
+    throw new AppError(status.BAD_REQUEST, 'Service Images is required');
+  }
+  payload.image = file.path;
   const result = await ServiceModel.create(payload);
   return result;
 };

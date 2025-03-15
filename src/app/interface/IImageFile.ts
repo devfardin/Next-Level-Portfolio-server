@@ -1,5 +1,5 @@
 import { Express } from 'express';
-export type IImageFiles = Record<string, Express.Multer.File[]>;
+export type IImageFiles = Record<string, Express.Multer.File>;
 export interface IImageFile {
   fieldname: string;
   originalname: string;

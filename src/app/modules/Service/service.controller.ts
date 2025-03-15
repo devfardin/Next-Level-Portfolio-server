@@ -4,7 +4,7 @@ import sendResponse from '../../utils/sendResponse';
 import { ServiceService } from './service.service';
 
 const createServiceIntoDB = catchAsync(async (req, res) => {
-  const result = await ServiceService.createServiceIntoDB(req.body);
+  const result = await ServiceService.createServiceIntoDB(req.body, req.file);
   sendResponse(res, {
     statusCode: status.OK,
     success: true,
