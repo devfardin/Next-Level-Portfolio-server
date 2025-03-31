@@ -2,9 +2,15 @@ import status from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { ServiceService } from './service.service';
+import { Express } from 'express';
 
 const createServiceIntoDB = catchAsync(async (req, res) => {
-  const result = await ServiceService.createServiceIntoDB(req.body, req.file);
+  const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+
+  const file = files?.['file']?.[0]?.path;
+  const icon = files?.['icon']?.[0]?.path;
+
+  const result = await ServiceService.createServiceIntoDB(req.body, file, icon);
   sendResponse(res, {
     statusCode: status.OK,
     success: true,
@@ -31,8 +37,19 @@ const getSingleService = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const delteeService = catchAsync(async (req, res) => {
+  const { serviceId } = req.params;
+  const result = await ServiceService.deleteService(serviceId);
+  sendResponse(res, {
+    statusCode: status.OK,
+    success: true,
+    message: 'The service has been successfully deleted.',
+    data: result,
+  });
+});
 export const ServiceController = {
   createServiceIntoDB,
   getAllServices,
   getSingleService,
+  delteeService,
 };

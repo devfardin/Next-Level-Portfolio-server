@@ -4,11 +4,25 @@ import AppError from '../../errors/AppError';
 import { TService } from './service.interface';
 import { ServiceModel } from './service.model';
 
-const createServiceIntoDB = async (payload: Partial<TService>, file: any) => {
+const createServiceIntoDB = async (
+  payload: Partial<TService>,
+  file: any,
+  icon: any,
+) => {
   if (!file) {
-    throw new AppError(status.BAD_REQUEST, 'Service Images is required');
+    throw new AppError(
+      status.NOT_FOUND,
+      'File not found. Please upload an image.',
+    );
   }
-  payload.image = file.path;
+  if (!icon) {
+    throw new AppError(
+      status.NOT_FOUND,
+      'Icon not found. Please upload an icon',
+    );
+  }
+  payload.image = file;
+  payload.icon = icon;
   const result = await ServiceModel.create(payload);
   return result;
 };
