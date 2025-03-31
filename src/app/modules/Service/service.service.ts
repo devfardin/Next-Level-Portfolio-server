@@ -29,11 +29,18 @@ const getSingleService = async (serviceId: string) => {
 const updateService = async (serviceId: string, payload: Partial<TService>) => {
   const service = await ServiceModel.findById(serviceId);
   if (!service) {
-    throw new AppError(status.NOT_FOUND, 'Product Not Found');
+    throw new AppError(status.NOT_FOUND, 'Service Not Found');
   }
   return await ServiceModel.findByIdAndUpdate(serviceId, payload, {
     new: true,
   });
+};
+const deleteService = async (serviceId: string) => {
+  const result = await ServiceModel.findByIdAndDelete(serviceId);
+  if (!result) {
+    throw new AppError(status.NOT_FOUND, 'Service not Found');
+  }
+  return result;
 };
 
 export const ServiceService = {
@@ -41,4 +48,5 @@ export const ServiceService = {
   getAllServices,
   getSingleService,
   updateService,
+  deleteService,
 };
