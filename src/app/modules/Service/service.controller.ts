@@ -6,7 +6,6 @@ import { Express } from 'express';
 
 const createServiceIntoDB = catchAsync(async (req, res) => {
   const files = req.files as { [fieldname: string]: Express.Multer.File[] };
-
   const file = files?.['file']?.[0]?.path;
   const icon = files?.['icon']?.[0]?.path;
 
