@@ -9,6 +9,7 @@ const createServiceIntoDB = catchAsync(async (req, res) => {
   const file = files?.['file']?.[0]?.path;
   const icon = files?.['icon']?.[0]?.path;
   const result = await ServiceService.createServiceIntoDB(req.body, file, icon);
+
   sendResponse(res, {
     statusCode: status.OK,
     success: true,
@@ -18,6 +19,7 @@ const createServiceIntoDB = catchAsync(async (req, res) => {
 });
 const getAllServices = catchAsync(async (req, res) => {
   const result = await ServiceService.getAllServices();
+
   sendResponse(res, {
     statusCode: status.OK,
     success: true,
@@ -28,6 +30,7 @@ const getAllServices = catchAsync(async (req, res) => {
 const getSingleService = catchAsync(async (req, res) => {
   const { serviceId } = req.params;
   const result = await ServiceService.getSingleService(serviceId);
+
   sendResponse(res, {
     statusCode: status.OK,
     success: true,
@@ -38,6 +41,7 @@ const getSingleService = catchAsync(async (req, res) => {
 const delteeService = catchAsync(async (req, res) => {
   const { serviceId } = req.params;
   const result = await ServiceService.deleteService(serviceId);
+
   sendResponse(res, {
     statusCode: status.OK,
     success: true,
@@ -48,6 +52,7 @@ const delteeService = catchAsync(async (req, res) => {
 const updateService = catchAsync(async (req, res) => {
   const { serviceId } = req.params;
   const result = await ServiceService.updateService(serviceId, req.body);
+
   sendResponse(res, {
     statusCode: status.OK,
     success: true,
