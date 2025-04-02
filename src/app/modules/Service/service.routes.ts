@@ -17,5 +17,6 @@ router.post(
 );
 router.delete('/:serviceId', ServiceController.delteeService);
 router.get('/:serviceId', ServiceController.getSingleService);
+router.patch('/:serviceId', ServiceController.updateService);
 router.get('/', ServiceController.getAllServices);
 export const ServiceRoutes = router;
