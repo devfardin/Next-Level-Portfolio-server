@@ -1,6 +1,7 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import { ServiceController } from './service.controller';
 import { upload } from '../../config/multer.config';
+import { parseBody } from '../../middlewares/bodyParser';
 const router = express.Router();
 
 router.post(
@@ -9,14 +10,22 @@ router.post(
     { name: 'file', maxCount: 1 }, // Main image
     { name: 'icon', maxCount: 1 }, // Icon
   ]),
-  (req: Request, res: Response, next: NextFunction) => {
-    req.body = JSON.parse(req.body.data);
-    next();
-  },
+  parseBody,
   ServiceController.createServiceIntoDB,
 );
 router.delete('/:serviceId', ServiceController.delteeService);
 router.get('/:serviceId', ServiceController.getSingleService);
-router.patch('/:serviceId', ServiceController.updateService);
+
+// Update Function here
+router.patch(
+  '/:serviceId',
+  upload.fields([
+    { name: 'file', maxCount: 1 }, // Main image
+    { name: 'icon', maxCount: 1 }, // Icon
+  ]),
+  parseBody,
+  ServiceController.updateService,
+);
+
 router.get('/', ServiceController.getAllServices);
 export const ServiceRoutes = router;

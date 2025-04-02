@@ -51,7 +51,15 @@ const delteeService = catchAsync(async (req, res) => {
 });
 const updateService = catchAsync(async (req, res) => {
   const { serviceId } = req.params;
-  const result = await ServiceService.updateService(serviceId, req.body);
+  const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+  const file = files?.['file']?.[0]?.path;
+  const icon = files?.['icon']?.[0]?.path;
+  const result = await ServiceService.updateService(
+    serviceId,
+    req.body,
+    file,
+    icon,
+  );
 
   sendResponse(res, {
     statusCode: status.OK,

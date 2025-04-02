@@ -40,20 +40,35 @@ const getSingleService = async (serviceId: string) => {
   return service;
 };
 
-const updateService = async (serviceId: string, payload: Partial<TService>) => {
+// Service Delete function
+const deleteService = async (serviceId: string) => {
   const service = await ServiceModel.findById(serviceId);
   if (!service) {
-    throw new AppError(status.NOT_FOUND, 'Service Not Found');
+    throw new AppError(status.NOT_FOUND, 'Service not found');
   }
-  return await ServiceModel.findByIdAndUpdate(serviceId, payload, {
+  const deteteService = await ServiceModel.findByIdAndDelete(serviceId);
+  return deteteService;
+};
+
+// service update function
+const updateService = async (
+  serviceId: string,
+  payload: Partial<TService>,
+  file: any,
+  icon: any,
+) => {
+  const isServiceExist = await ServiceModel.findById(serviceId);
+  if (!isServiceExist) {
+    throw new AppError(status.NOT_FOUND, 'This service not found');
+  }
+  if (file || icon) {
+    payload.image = file;
+    payload.icon = icon;
+  }
+
+  const result = await ServiceModel.findByIdAndUpdate(serviceId, payload, {
     new: true,
   });
-};
-const deleteService = async (serviceId: string) => {
-  const result = await ServiceModel.findByIdAndDelete(serviceId);
-  if (!result) {
-    throw new AppError(status.NOT_FOUND, 'Service not Found');
-  }
   return result;
 };
 

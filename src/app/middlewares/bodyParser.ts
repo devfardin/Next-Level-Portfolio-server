@@ -11,7 +11,8 @@ export const parseBody = catchAsync(
         'Please provide data in the body under data key',
       );
     }
-    req.body.parse(req.body.data);
+    req.body = JSON.parse(req.body.data);
+
     next();
   },
 );
