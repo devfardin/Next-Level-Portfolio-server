@@ -4,6 +4,7 @@ import { IImageFile } from '../../interface/IImageFile';
 import { TReview } from './review.interface';
 import { ReviewModel } from './review.modal';
 
+// Create new Review
 const createReviews = async (payload: TReview, profile: IImageFile) => {
   if (!profile) {
     const firstLatter = payload.name.slice(0, 1);
@@ -14,20 +15,21 @@ const createReviews = async (payload: TReview, profile: IImageFile) => {
   const result = await ReviewModel.create(payload);
   return result;
 };
+// Delete existing review01
 const deleteReview = async (id: string) => {
   const result = await ReviewModel.findByIdAndDelete(id);
   return result;
 };
 const updateReview = async (
-  payload: Partial<TReview>,
   id: string,
+  payload: Partial<TReview>,
   profile: IImageFile,
 ) => {
   const serviceExist = await ReviewModel.findById(id);
   if (!serviceExist) {
     throw new AppError(status.NOT_FOUND, 'reviews is not found');
   }
-  const clientProfile = profile.path;
+  const clientProfile = profile?.path;
   if (clientProfile) {
     payload.profile = clientProfile;
   }

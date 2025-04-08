@@ -8,6 +8,13 @@ router.post(
   '/',
   upload.single('file'),
   parseBody,
-  ReviewController.getReviewsFromFiverr,
+  ReviewController.createReview,
 );
+router.patch(
+  '/:reviewId',
+  upload.single('file'),
+  parseBody,
+  ReviewController.reviewUpdate,
+);
+router.delete('/:reviewId', ReviewController.deleteReview);
 export const ReviewRoutes = router;
