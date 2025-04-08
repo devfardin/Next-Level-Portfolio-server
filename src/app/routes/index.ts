@@ -19,7 +19,7 @@ const moduleRoutes = [
     route: ServiceRoutes,
   },
   {
-    path: '/scrape',
+    path: '/reviews',
     route: ReviewRoutes,
   },
 ];
